@@ -123,49 +123,44 @@ struct LockScreenView: View {
             Color.black
             // Two-orb iOS-style abstract wallpaper
             Canvas { context, size in
+                let rect = Path(CGRect(origin: .zero, size: size))
+
                 // Top orb (warm)
                 let topCenter = CGPoint(x: size.width * 0.5, y: size.height * 0.18)
                 let topRadius: CGFloat = size.width * 0.7
-                context.drawLayer { ctx in
-                    let colors = Gradient(colors: [
-                        Color(red: 0.55, green: 0.45, blue: 0.60).opacity(0.7),
-                        Color(red: 0.20, green: 0.15, blue: 0.35).opacity(0.5),
-                        Color.clear
-                    ])
-                    let gradient = ctx.resolveShading(.radialGradient(
-                        colors, center: topCenter,
-                        startRadius: 0, endRadius: topRadius
-                    ))
-                    ctx.fill(Path(CGRect(origin: .zero, size: size)), with: gradient)
-                }
+                let topColors = Gradient(colors: [
+                    Color(red: 0.55, green: 0.45, blue: 0.60).opacity(0.7),
+                    Color(red: 0.20, green: 0.15, blue: 0.35).opacity(0.5),
+                    Color.clear
+                ])
+                context.fill(rect, with: .radialGradient(
+                    topColors, center: topCenter,
+                    startRadius: 0, endRadius: topRadius
+                ))
+
                 // Bottom orb (cool blue/teal)
                 let bottomCenter = CGPoint(x: size.width * 0.5, y: size.height * 0.85)
                 let bottomRadius: CGFloat = size.width * 0.75
-                context.drawLayer { ctx in
-                    let colors = Gradient(colors: [
-                        Color(red: 0.15, green: 0.35, blue: 0.50).opacity(0.6),
-                        Color(red: 0.05, green: 0.15, blue: 0.30).opacity(0.4),
-                        Color.clear
-                    ])
-                    let gradient = ctx.resolveShading(.radialGradient(
-                        colors, center: bottomCenter,
-                        startRadius: 0, endRadius: bottomRadius
-                    ))
-                    ctx.fill(Path(CGRect(origin: .zero, size: size)), with: gradient)
-                }
+                let bottomColors = Gradient(colors: [
+                    Color(red: 0.15, green: 0.35, blue: 0.50).opacity(0.6),
+                    Color(red: 0.05, green: 0.15, blue: 0.30).opacity(0.4),
+                    Color.clear
+                ])
+                context.fill(rect, with: .radialGradient(
+                    bottomColors, center: bottomCenter,
+                    startRadius: 0, endRadius: bottomRadius
+                ))
+
                 // Subtle light line intersection
                 let mid = CGPoint(x: size.width * 0.5, y: size.height * 0.55)
-                context.drawLayer { ctx in
-                    let colors = Gradient(colors: [
-                        Color.white.opacity(0.06),
-                        Color.clear
-                    ])
-                    let gradient = ctx.resolveShading(.radialGradient(
-                        colors, center: mid,
-                        startRadius: 0, endRadius: size.width * 0.5
-                    ))
-                    ctx.fill(Path(CGRect(origin: .zero, size: size)), with: gradient)
-                }
+                let midColors = Gradient(colors: [
+                    Color.white.opacity(0.06),
+                    Color.clear
+                ])
+                context.fill(rect, with: .radialGradient(
+                    midColors, center: mid,
+                    startRadius: 0, endRadius: size.width * 0.5
+                ))
             }
         }
     }

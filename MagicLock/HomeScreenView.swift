@@ -150,32 +150,29 @@ struct HomeScreenView: View {
         ZStack {
             Color.black
             Canvas { context, size in
+                let rect = Path(CGRect(origin: .zero, size: size))
+
                 let topCenter = CGPoint(x: size.width * 0.5, y: size.height * 0.18)
-                context.drawLayer { ctx in
-                    let colors = Gradient(colors: [
-                        Color(red: 0.55, green: 0.45, blue: 0.60).opacity(0.5),
-                        Color(red: 0.20, green: 0.15, blue: 0.35).opacity(0.35),
-                        Color.clear
-                    ])
-                    let gradient = ctx.resolveShading(.radialGradient(
-                        colors, center: topCenter,
-                        startRadius: 0, endRadius: size.width * 0.7
-                    ))
-                    ctx.fill(Path(CGRect(origin: .zero, size: size)), with: gradient)
-                }
+                let topColors = Gradient(colors: [
+                    Color(red: 0.55, green: 0.45, blue: 0.60).opacity(0.5),
+                    Color(red: 0.20, green: 0.15, blue: 0.35).opacity(0.35),
+                    Color.clear
+                ])
+                context.fill(rect, with: .radialGradient(
+                    topColors, center: topCenter,
+                    startRadius: 0, endRadius: size.width * 0.7
+                ))
+
                 let bottomCenter = CGPoint(x: size.width * 0.5, y: size.height * 0.85)
-                context.drawLayer { ctx in
-                    let colors = Gradient(colors: [
-                        Color(red: 0.15, green: 0.35, blue: 0.50).opacity(0.4),
-                        Color(red: 0.05, green: 0.15, blue: 0.30).opacity(0.25),
-                        Color.clear
-                    ])
-                    let gradient = ctx.resolveShading(.radialGradient(
-                        colors, center: bottomCenter,
-                        startRadius: 0, endRadius: size.width * 0.75
-                    ))
-                    ctx.fill(Path(CGRect(origin: .zero, size: size)), with: gradient)
-                }
+                let bottomColors = Gradient(colors: [
+                    Color(red: 0.15, green: 0.35, blue: 0.50).opacity(0.4),
+                    Color(red: 0.05, green: 0.15, blue: 0.30).opacity(0.25),
+                    Color.clear
+                ])
+                context.fill(rect, with: .radialGradient(
+                    bottomColors, center: bottomCenter,
+                    startRadius: 0, endRadius: size.width * 0.75
+                ))
             }
             // Slight blur on home for depth
             Color.black.opacity(0.15)
