@@ -11,13 +11,19 @@ struct PasscodeView: View {
     
     var body: some View {
         ZStack {
-            // Blurred wallpaper background
-            Image(state.wallpaperImage)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
-                .blur(radius: 30)
-                .overlay(Color.black.opacity(0.3))
+            // Background Gradient (blurred for passcode)
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.1, green: 0.1, blue: 0.2),
+                    Color(red: 0.0, green: 0.05, blue: 0.15),
+                    Color(red: 0.1, green: 0.2, blue: 0.3)
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all)
+            .blur(radius: 40)
+            .overlay(Color.black.opacity(0.4))
             
             VStack {
                 Spacer().frame(height: 100)

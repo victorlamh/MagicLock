@@ -12,11 +12,17 @@ struct HomeScreenView: View {
     
     var body: some View {
         ZStack {
-            // Wallpaper
-            Image(state.wallpaperImage)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
+            // Background Gradient
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.1, green: 0.1, blue: 0.2),
+                    Color(red: 0.0, green: 0.05, blue: 0.15),
+                    Color(red: 0.1, green: 0.2, blue: 0.3)
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all)
             
             VStack {
                 // Status Bar

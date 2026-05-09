@@ -5,29 +5,44 @@ struct LockScreenView: View {
     
     var body: some View {
         ZStack {
-            // Wallpaper
-            Image(state.wallpaperImage)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
-                .overlay(Color.black.opacity(0.1)) // Subtle depth
+            // Background Gradient (matching the provided layout image)
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.1, green: 0.1, blue: 0.2), // Dark top
+                    Color(red: 0.0, green: 0.05, blue: 0.15), // Deep middle
+                    Color(red: 0.1, green: 0.2, blue: 0.3) // Slightly lighter bottom
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all)
+            .overlay(
+                Ellipse()
+                    .fill(Color.blue.opacity(0.15))
+                    .frame(width: 600, height: 600)
+                    .blur(radius: 100)
+                    .offset(y: -200)
+            )
             
             VStack {
                 Spacer()
                     .frame(height: 60)
                 
                 // Date
-                Text(state.currentTime.formatted(.dateTime.weekday(.wide).month(.wide).day(.defaultDigits)))
-                    .font(.system(size: 22, weight: .medium, design: .default))
+                Text(state.currentTime.formatted(.dateTime.weekday(.wide).day().month(.wide)))
+                    .font(.system(size: 22, weight: .medium))
                     .foregroundColor(.white)
-                    .shadow(radius: 5)
+                    .shadow(radius: 2)
                 
                 // Time
                 Text(state.currentTime.formatted(.dateTime.hour().minute()))
-                    .font(.system(size: 96, weight: .bold, design: .default))
+                    .font(.system(size: 100, weight: .bold, design: .default))
                     .foregroundColor(.white)
-                    .shadow(radius: 5)
+                    .shadow(radius: 2)
                     .padding(.top, -10)
+                    .onTapGesture(count: 3) {
+                        NotificationCenter.default.post(name: NSNotification.Name("OpenSettings"), object: nil)
+                    }
                 
                 Spacer()
                 
